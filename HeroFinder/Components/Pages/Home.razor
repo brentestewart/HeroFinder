@@ -1,0 +1,99 @@
+﻿@page "/"
+@inject HeroApiService HeroApiService
+
+<div class="home2-bg">
+    <div class="centered-content">
+        <div class="three-column-layout">
+            <div class="column left-column">
+                @if (featuredHeroes != null)
+                {
+                    @for (int i = 0; i < 2 && i < featuredHeroes.Count; i++)
+                    {
+                        var hero = featuredHeroes[i];
+                        <div class="hero-image-card @(hero.Universe == "Marvel" ? "marvel-featured" : "dc-featured")">
+                            <a href="/herodetails/@hero.Id/@Uri.EscapeDataString("/")">
+                                <img src="@hero.ImageLink" alt="@hero.HeroName" class="hero-side-image" />
+                                <div class="hero-name-overlay">@hero.HeroName</div>
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Loading left heroes...</p>
+                }
+            </div>
+            
+            <div class="column center-column">
+                <div class="welcome-section">
+                    <h2 class="welcome-title">Welcome @CurrentUser?.FirstName, we hope you enjoy the Ultimate Hero Experience</h2>
+                    <p class="site-description">
+                        Discover the ultimate collection of legendary superheroes from Marvel and DC Comics! 
+                        Explore their incredible powers, secret identities, and epic stories. Build your 
+                        personal collection of favorites and dive into the world of legendary champions 
+                        who inspire us all to be heroes in our own lives.
+                    </p>
+                    
+                    <div class="action-buttons">
+                        <a href="/heroindex" class="explore-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Explore Heroes
+                        </a>
+                        <a href="/favorites" class="favorites-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                            </svg>
+                            My Favorites
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column right-column">
+                @if (featuredHeroes != null)
+                {
+                    @for (int i = 2; i < 4 && i < featuredHeroes.Count; i++)
+                    {
+                        var hero = featuredHeroes[i];
+                        <div class="hero-image-card @(hero.Universe == "Marvel" ? "marvel-featured" : "dc-featured")">
+                            <a href="/herodetails/@hero.Id/@Uri.EscapeDataString("/")">
+                                <img src="@hero.ImageLink" alt="@hero.HeroName" class="hero-side-image" />
+                                <div class="hero-name-overlay">@hero.HeroName</div>
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Loading right heroes...</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    public User? CurrentUser { get; set; }
+
+    private List<Hero>? featuredHeroes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFeaturedHeroes();
+    }
+
+    private async Task LoadFeaturedHeroes()
+    {
+        var allHeroes = await HeroApiService.GetHeroesAsync();
+
+        // Get 4 random heroes for the new layout
+        var random = new Random();
+        featuredHeroes = allHeroes
+            .OrderBy(x => random.Next())
+            .Take(4)
+            .ToList();
+    }
+}

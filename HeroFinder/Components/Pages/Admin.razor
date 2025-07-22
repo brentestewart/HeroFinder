@@ -1,0 +1,203 @@
+﻿@page "/admin"
+@rendermode InteractiveServer
+@using HeroFinder.Shared.Models
+@using System.ComponentModel.DataAnnotations
+
+<div class="admin-bg">
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">Hero Administration</h1>
+            <p class="admin-subtitle">Add new heroes to the universe</p>
+        </div>
+
+        <div class="admin-form-container">
+            <EditForm Model="newHero" OnValidSubmit="HandleValidSubmit" class="hero-form">
+                <DataAnnotationsValidator />
+                
+                <div class="form-section">
+                    <h3 class="section-title">Basic Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="heroName" class="form-label">Hero Name</label>
+                        <InputText id="heroName" @bind-Value="newHero.HeroName" class="form-input" placeholder="Enter hero name..." />
+                        <ValidationMessage For="@(() => newHero.HeroName)" class="validation-error" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="secretIdentity" class="form-label">Secret Identity</label>
+                        <InputText id="secretIdentity" @bind-Value="newHero.SecretIdentity" class="form-input" placeholder="Enter secret identity..." />
+                        <ValidationMessage For="@(() => newHero.SecretIdentity)" class="validation-error" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="universe" class="form-label">Universe</label>
+                        <InputSelect id="universe" @bind-Value="newHero.Universe" class="form-select">
+                            <option value="">Select Universe</option>
+                            <option value="Marvel">Marvel</option>
+                            <option value="DC">DC</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => newHero.Universe)" class="validation-error" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imageLink" class="form-label">Image URL</label>
+                        <InputText id="imageLink" @bind-Value="newHero.ImageLink" class="form-input" placeholder="Enter image URL..." />
+                        <ValidationMessage For="@(() => newHero.ImageLink)" class="validation-error" />
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-title">Abilities & Powers</h3>
+                    
+                    <div class="abilities-container">
+                        @for (int i = 0; i < abilityInputs.Count; i++)
+                        {
+                            int index = i; // Capture for closure
+                            <div class="ability-input-group">
+                                <input type="text" @bind="abilityInputs[index]" @bind:event="oninput" 
+                                       class="ability-input" placeholder="Enter ability..." />
+                                <button type="button" @onclick="() => RemoveAbility(index)" 
+                                        class="remove-ability-btn" title="Remove ability">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    <button type="button" @onclick="AddAbility" class="add-ability-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Add Ability
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" disabled="@isSubmitting">
+                        @if (isSubmitting)
+                        {
+                            <div class="loading-spinner-small"></div>
+                            <span>Adding Hero...</span>
+                        }
+                        else
+                        {
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Add Hero</span>
+                        }
+                    </button>
+
+                    <button type="button" @onclick="ResetForm" class="reset-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 12A9 9 0 0 1 12 3A9 9 0 0 1 21 12A9 9 0 0 1 12 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M3 12L8 17L3 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Reset</span>
+                    </button>
+                </div>
+
+                <ValidationSummary class="validation-summary" />
+            </EditForm>
+
+            @if (showSuccessMessage)
+            {
+                <div class="success-message">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Hero "@lastAddedHeroName" has been successfully added!</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private HeroFormModel newHero = new();
+    private List<string> abilityInputs = new() { "", "", "" }; // Start with 3 empty inputs
+    private bool isSubmitting = false;
+    private bool showSuccessMessage = false;
+    private string lastAddedHeroName = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        ResetForm();
+    }
+
+    private void AddAbility()
+    {
+        abilityInputs.Add("");
+    }
+
+    private void RemoveAbility(int index)
+    {
+        if (abilityInputs.Count > 1) // Keep at least one input
+        {
+            abilityInputs.RemoveAt(index);
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isSubmitting = true;
+        
+        try
+        {
+            // Filter out empty abilities
+            newHero.Abilities = abilityInputs.Where(a => !string.IsNullOrWhiteSpace(a)).ToList();
+            
+            // Simulate processing time (replace with actual API call later)
+            await Task.Delay(1500);
+            
+            lastAddedHeroName = newHero.HeroName;
+            showSuccessMessage = true;
+            
+            // Reset form after successful submission
+            ResetForm();
+            
+            // Hide success message after 5 seconds
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(5000);
+                showSuccessMessage = false;
+                await InvokeAsync(StateHasChanged);
+            });
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void ResetForm()
+    {
+        newHero = new HeroFormModel();
+        abilityInputs = new List<string> { "", "", "" };
+        showSuccessMessage = false;
+    }
+
+    // Form model with validation attributes
+    public class HeroFormModel
+    {
+        [Required(ErrorMessage = "Hero name is required")]
+        [StringLength(100, ErrorMessage = "Hero name cannot exceed 100 characters")]
+        public string HeroName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Secret identity is required")]
+        [StringLength(100, ErrorMessage = "Secret identity cannot exceed 100 characters")]
+        public string SecretIdentity { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Universe selection is required")]
+        public string Universe { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Image URL is required")]
+        [Url(ErrorMessage = "Please enter a valid URL")]
+        public string ImageLink { get; set; } = string.Empty;
+
+        public List<string> Abilities { get; set; } = new();
+    }
+}

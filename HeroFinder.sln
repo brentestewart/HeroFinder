@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroFinder", "HeroFinder\HeroFinder.csproj", "{704BAE48-4941-DF6F-7A27-89669E81B7C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroFinder.Client", "HeroFinder.Client\HeroFinder.Client.csproj", "{934CF6A2-86A9-359C-B9C0-C7ED3DD4630F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroFinder.Shared", "HeroFinder.Shared\HeroFinder.Shared.csproj", "{CAA27BA3-A520-4CE9-9EDF-886CEE17DAFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroFinder.ComponentLibrary", "HeroFinder.ComponentLibrary\HeroFinder.ComponentLibrary.csproj", "{9F74249E-6883-581F-F30A-B05C8EBF2B85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{704BAE48-4941-DF6F-7A27-89669E81B7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704BAE48-4941-DF6F-7A27-89669E81B7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704BAE48-4941-DF6F-7A27-89669E81B7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704BAE48-4941-DF6F-7A27-89669E81B7C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{934CF6A2-86A9-359C-B9C0-C7ED3DD4630F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{934CF6A2-86A9-359C-B9C0-C7ED3DD4630F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{934CF6A2-86A9-359C-B9C0-C7ED3DD4630F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{934CF6A2-86A9-359C-B9C0-C7ED3DD4630F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAA27BA3-A520-4CE9-9EDF-886CEE17DAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA27BA3-A520-4CE9-9EDF-886CEE17DAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA27BA3-A520-4CE9-9EDF-886CEE17DAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA27BA3-A520-4CE9-9EDF-886CEE17DAFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F74249E-6883-581F-F30A-B05C8EBF2B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F74249E-6883-581F-F30A-B05C8EBF2B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F74249E-6883-581F-F30A-B05C8EBF2B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F74249E-6883-581F-F30A-B05C8EBF2B85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17BB16BD-DA1D-4B54-A3B7-69142370D945}
+	EndGlobalSection
+EndGlobal

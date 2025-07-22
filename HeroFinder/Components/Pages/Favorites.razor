@@ -1,0 +1,85 @@
+﻿@page "/favorites"
+@rendermode InteractiveServer
+@inject HeroApiService HeroApiService
+
+<div class="favorites-bg">
+    <div class="favorites-header-container">
+        <div class="favorites-header-wrapper">
+            <h1 class="favorites-title">Your collection of legendary champions</h1>
+        </div>
+    </div>
+    
+    @if (favoriteHeroes == null)
+    {
+        <div class="loading-container">
+            <div class="loading-card">
+                <h2 class="loading-text">Loading your favorites...</h2>
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    }
+    else if (!favoriteHeroes.Any())
+    {
+        <div class="empty-favorites-container">
+            <div class="empty-favorites-card">
+                <div class="empty-icon">⭐</div>
+                <h2 class="empty-title">No Favorites Yet!</h2>
+                <p class="empty-message">Start building your collection by clicking the star on your favorite heroes.</p>
+                <a href="/heroindex" class="browse-heroes-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Browse Heroes
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="favorites-stats">
+            <span class="stats-text">You have <strong>@favoriteHeroes.Count</strong> favorite @(favoriteHeroes.Count == 1 ? "hero" : "heroes")</span>
+        </div>
+        <div class="hero-list">
+            @foreach (var hero in favoriteHeroes)
+            {
+                <HeroCard Hero="hero" OnFavoriteToggle="HandleFavoriteToggle" />
+            }
+        </div>
+    }
+</div>
+
+<style>
+</style>
+
+@code {
+    private List<Hero>? favoriteHeroes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFavoriteHeroes();
+    }
+
+    private async Task LoadFavoriteHeroes()
+    {
+        favoriteHeroes = await HeroApiService.GetFavoriteHeroesAsync();
+    }
+
+    private async Task HandleFavoriteToggle(Hero hero)
+    {
+        var newFavoriteStatus = !hero.IsFavorite;
+        var success = await HeroApiService.UpdateHeroFavoriteAsync(hero.Id, newFavoriteStatus);
+        
+        if (success)
+        {
+            hero.IsFavorite = newFavoriteStatus;
+            
+            // If hero was unfavorited, remove it from the list
+            if (!hero.IsFavorite && favoriteHeroes != null)
+            {
+                favoriteHeroes.Remove(hero);
+            }
+            
+            StateHasChanged();
+        }
+    }
+}

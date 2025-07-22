@@ -1,0 +1,362 @@
+[
+  {
+    "Id": 1,
+    "HeroName": "Spider-Man",
+    "SecretIdentity": "Peter Parker",
+    "Abilities": [
+      "Wall-Crawling",
+      "Super Strength",
+      "Spider-Sense",
+      "Agility"
+    ],
+    "ImageLink": "/images/spider-man.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": true
+  },
+  {
+    "Id": 2,
+    "HeroName": "Iron Man",
+    "SecretIdentity": "Tony Stark",
+    "Abilities": [
+      "Powered Armor Suit",
+      "Genius Intellect",
+      "Flight",
+      "Energy Blasts"
+    ],
+    "ImageLink": "/images/iron-man.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": true
+  },
+  {
+    "Id": 3,
+    "HeroName": "Captain America",
+    "SecretIdentity": "Steve Rogers",
+    "Abilities": [
+      "Super Soldier",
+      "Enhanced Strength",
+      "Shield Mastery",
+      "Leadership"
+    ],
+    "ImageLink": "/images/captain-america.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 4,
+    "HeroName": "Hulk",
+    "SecretIdentity": "Bruce Banner",
+    "Abilities": [
+      "Super Strength",
+      "Regeneration",
+      "Durability"
+    ],
+    "ImageLink": "/images/hulk.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": true
+  },
+  {
+    "Id": 5,
+    "HeroName": "Thor",
+    "SecretIdentity": "Thor Odinson",
+    "Abilities": [
+      "God of Thunder",
+      "Super Strength",
+      "Mjolnir Wielder",
+      "Flight"
+    ],
+    "ImageLink": "/images/thor.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 6,
+    "HeroName": "Black Panther",
+    "SecretIdentity": "T\u0027Challa",
+    "Abilities": [
+      "Enhanced Senses",
+      "Super Strength",
+      "Vibranium Suit",
+      "Martial Arts"
+    ],
+    "ImageLink": "/images/black-panther.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": true
+  },
+  {
+    "Id": 7,
+    "HeroName": "Doctor Strange",
+    "SecretIdentity": "Stephen Strange",
+    "Abilities": [
+      "Magic",
+      "Teleportation",
+      "Time Manipulation",
+      "Astral Projection"
+    ],
+    "ImageLink": "/images/doctor-strange.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 8,
+    "HeroName": "Wolverine",
+    "SecretIdentity": "Logan",
+    "Abilities": [
+      "Regeneration",
+      "Adamantium Claws",
+      "Enhanced Senses",
+      "Longevity"
+    ],
+    "ImageLink": "/images/wolverine.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 9,
+    "HeroName": "Scarlet Witch",
+    "SecretIdentity": "Wanda Maximoff",
+    "Abilities": [
+      "Reality Warping",
+      "Telekinesis",
+      "Energy Manipulation",
+      "Magic"
+    ],
+    "ImageLink": "/images/scarlet-witch.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 10,
+    "HeroName": "Deadpool",
+    "SecretIdentity": "Wade Wilson",
+    "Abilities": [
+      "Regeneration",
+      "Expert Marksman",
+      "Swordsmanship",
+      "Immortality"
+    ],
+    "ImageLink": "/images/deadpool.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": true
+  },
+  {
+    "Id": 11,
+    "HeroName": "Captain Marvel",
+    "SecretIdentity": "Carol Danvers",
+    "Abilities": [
+      "Super Strength",
+      "Flight",
+      "Energy Projection",
+      "Durability"
+    ],
+    "ImageLink": "/images/captain-marvel.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 12,
+    "HeroName": "Black Widow",
+    "SecretIdentity": "Natasha Romanoff",
+    "Abilities": [
+      "Martial Arts",
+      "Espionage",
+      "Marksmanship",
+      "Acrobatics"
+    ],
+    "ImageLink": "/images/black-widow.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 13,
+    "HeroName": "Storm",
+    "SecretIdentity": "Ororo Munroe",
+    "Abilities": [
+      "Weather Manipulation",
+      "Flight",
+      "Combat Skills"
+    ],
+    "ImageLink": "/images/storm.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 14,
+    "HeroName": "Jean Grey",
+    "SecretIdentity": "Jean Grey",
+    "Abilities": [
+      "Telepathy",
+      "Telekinesis",
+      "Phoenix Force"
+    ],
+    "ImageLink": "/images/jean-grey.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 15,
+    "HeroName": "She-Hulk",
+    "SecretIdentity": "Jennifer Walters",
+    "Abilities": [
+      "Super Strength",
+      "Regeneration",
+      "Law Expertise"
+    ],
+    "ImageLink": "/images/she-hulk.jpg",
+    "Universe": "Marvel",
+    "IsFavorite": false
+  },
+  {
+    "Id": 16,
+    "HeroName": "Wonder Woman",
+    "SecretIdentity": "Diana Prince",
+    "Abilities": [
+      "Super Strength",
+      "Flight",
+      "Combat Skills",
+      "Lasso of Truth"
+    ],
+    "ImageLink": "/images/wonder-woman.jpg",
+    "Universe": "DC",
+    "IsFavorite": true
+  },
+  {
+    "Id": 17,
+    "HeroName": "Superman",
+    "SecretIdentity": "Clark Kent",
+    "Abilities": [
+      "Super Strength",
+      "Flight",
+      "Heat Vision",
+      "X-Ray Vision",
+      "Invulnerability"
+    ],
+    "ImageLink": "/images/superman.jpg",
+    "Universe": "DC",
+    "IsFavorite": true
+  },
+  {
+    "Id": 18,
+    "HeroName": "Batman",
+    "SecretIdentity": "Bruce Wayne",
+    "Abilities": [
+      "Genius Intellect",
+      "Martial Arts",
+      "Stealth",
+      "Detective Skills"
+    ],
+    "ImageLink": "/images/batman.jpg",
+    "Universe": "DC",
+    "IsFavorite": false
+  },
+  {
+    "Id": 19,
+    "HeroName": "Supergirl",
+    "SecretIdentity": "Kara Zor-El",
+    "Abilities": [
+      "Super Strength",
+      "Flight",
+      "Heat Vision",
+      "Invulnerability"
+    ],
+    "ImageLink": "/images/supergirl.jpg",
+    "Universe": "DC",
+    "IsFavorite": false
+  },
+  {
+    "Id": 20,
+    "HeroName": "Batgirl",
+    "SecretIdentity": "Barbara Gordon",
+    "Abilities": [
+      "Martial Arts",
+      "Detective Skills",
+      "Hacking",
+      "Acrobatics"
+    ],
+    "ImageLink": "/images/batgirl.jpg",
+    "Universe": "DC",
+    "IsFavorite": true
+  },
+  {
+    "Id": 21,
+    "HeroName": "Zatanna",
+    "SecretIdentity": "Zatanna Zatara",
+    "Abilities": [
+      "Magic",
+      "Spellcasting",
+      "Illusions"
+    ],
+    "ImageLink": "/images/zatanna.jpg",
+    "Universe": "DC",
+    "IsFavorite": false
+  },
+  {
+    "Id": 22,
+    "HeroName": "Hawkgirl",
+    "SecretIdentity": "Shayera Hol",
+    "Abilities": [
+      "Flight",
+      "Mace Wielding",
+      "Reincarnation",
+      "Combat Skills"
+    ],
+    "ImageLink": "/images/hawkgirl.jpg",
+    "Universe": "DC",
+    "IsFavorite": false
+  },
+  {
+    "Id": 23,
+    "HeroName": "Catwoman",
+    "SecretIdentity": "Selina Kyle",
+    "Abilities": [
+      "Stealth",
+      "Agility",
+      "Martial Arts",
+      "Whip Mastery"
+    ],
+    "ImageLink": "/images/catwoman.jpg",
+    "Universe": "DC",
+    "IsFavorite": true
+  },
+  {
+    "Id": 24,
+    "HeroName": "The Flash",
+    "SecretIdentity": "Barry Allen",
+    "Abilities": [
+      "Super Speed",
+      "Time Travel",
+      "Phasing",
+      "Accelerated Healing"
+    ],
+    "ImageLink": "/images/the-flash.jpg",
+    "Universe": "DC",
+    "IsFavorite": true
+  },
+  {
+    "Id": 25,
+    "HeroName": "Aquaman",
+    "SecretIdentity": "Arthur Curry",
+    "Abilities": [
+      "Underwater Breathing",
+      "Telepathy with Sea Life",
+      "Super Strength",
+      "Trident Mastery"
+    ],
+    "ImageLink": "/images/aquaman.jpg",
+    "Universe": "DC",
+    "IsFavorite": true
+  },
+  {
+    "Id": 26,
+    "HeroName": "Green Lantern",
+    "SecretIdentity": "Hal Jordan",
+    "Abilities": [
+      "Power Ring",
+      "Flight",
+      "Energy Constructs",
+      "Force Fields"
+    ],
+    "ImageLink": "/images/green-lantern.jpg",
+    "Universe": "DC",
+    "IsFavorite": true
+  }
+]

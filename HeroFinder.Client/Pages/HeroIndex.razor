@@ -1,0 +1,72 @@
+﻿@rendermode InteractiveAuto
+@page "/heroindex"
+@inject HeroApiService HeroApiService
+
+<div class="hero-index-bg">
+    <div class="hero-search-bar-container">
+        <div class="hero-search-bar-wrapper">
+            <input class="hero-search-bar" type="text" placeholder="Search for a hero..." @bind="searchTerm" @bind:event="oninput" @ref="searchInputRef" />
+            @if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                <button type="button" class="hero-search-clear" @onclick="ClearSearch" tabindex="-1" aria-label="Clear search">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="14" cy="14" r="13" fill="#E53935" stroke="#FDD835" stroke-width="2"/>
+                        <path d="M9 9L19 19M19 9L9 19" stroke="#FAFAFA" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            }
+        </div>
+    </div>
+    @if (heroes == null)
+    {
+        <p>Loading heroes...</p>
+    }
+    else if (!FilteredHeroes.Any())
+    {
+        <p>No heroes found.</p>
+    }
+    else
+    {
+        <div class="hero-list">
+            @foreach (var hero in FilteredHeroes)
+            {
+                <HeroCard Hero="hero" OnFavoriteToggle="HandleFavoriteToggle" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<Hero>? heroes;
+    private string searchTerm = string.Empty;
+    private ElementReference searchInputRef;
+
+    private IEnumerable<Hero> FilteredHeroes =>
+        string.IsNullOrWhiteSpace(searchTerm)
+            ? heroes ?? Enumerable.Empty<Hero>()
+            : (heroes ?? Enumerable.Empty<Hero>())
+                .Where(h => h.HeroName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+
+    private void ClearSearch()
+    {
+        searchTerm = string.Empty;
+        _ = searchInputRef.FocusAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        heroes = await HeroApiService.GetHeroesAsync();
+    }
+
+    private async Task HandleFavoriteToggle(Hero hero)
+    {
+        var newFavoriteStatus = !hero.IsFavorite;
+        var success = await HeroApiService.UpdateHeroFavoriteAsync(hero.Id, newFavoriteStatus);
+        
+        if (success)
+        {
+            hero.IsFavorite = newFavoriteStatus;
+            StateHasChanged();
+        }
+    }
+}

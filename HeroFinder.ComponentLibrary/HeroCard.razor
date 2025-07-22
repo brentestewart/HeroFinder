@@ -1,0 +1,47 @@
+@using HeroFinder.Shared.Models
+@inject NavigationManager Navigation
+
+<div class="hero-card-wrapper">
+    <a href="/herodetails/@Hero?.Id/@Uri.EscapeDataString(Navigation.Uri)" style="text-decoration:none;color:inherit;">
+        <div class="hero-card2 @(Hero?.Universe == "Marvel" ? "marvel-bg2" : "dc-bg2")">
+            <div class="hero-image-border2">
+                <div class="hero-image-row2">
+                    <div class="hero-image-container2">
+                        <img src="@Hero?.ImageLink" alt="@Hero?.HeroName" class="hero-image2" />
+                    </div>
+                    <div class="hero-universe-vertical2 @(Hero?.Universe == "Marvel" ? "marvel2" : "dc2")">
+                        @(Hero?.Universe == "Marvel" ? "Marvel" : "DC Comics")
+                    </div>
+                </div>
+            </div>
+            <div class="hero-details2">
+                <h2 class="hero-name2">@Hero?.HeroName</h2>
+            </div>
+        </div>
+    </a>
+    <button class="favorite-button @(Hero?.IsFavorite == true ? "favorited" : "")" 
+            @onclick="ToggleFavorite" 
+            @onclick:stopPropagation="true"
+            title="@(Hero?.IsFavorite == true ? "Remove from favorites" : "Add to favorites")">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="@(Hero?.IsFavorite == true ? "#FDD835" : "none")" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+                  stroke="@(Hero?.IsFavorite == true ? "#FDD835" : "#FAFAFA")" 
+                  stroke-width="2" 
+                  stroke-linejoin="round"/>
+        </svg>
+    </button>
+</div>
+
+@code {
+    [Parameter]
+    public Hero? Hero { get; set; }
+
+    [Parameter]
+    public EventCallback<Hero> OnFavoriteToggle { get; set; }
+
+    private async Task ToggleFavorite()
+    {
+        if (Hero == null) return;
+        await OnFavoriteToggle.InvokeAsync(Hero);
+    }
+}

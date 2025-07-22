@@ -1,0 +1,55 @@
+﻿<div>Some data</div>
+<input value="@Data" @onchange="HandleInput" />
+
+@code {
+    [Parameter] public string Data { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> DataChanged { get; set; }
+
+    private async Task HandleInput(ChangeEventArgs e)
+    {
+        var newData = e.Value?.ToString() ?? string.Empty;
+        await DataChanged.InvokeAsync(newData);
+    }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine("User - Calling SetParametersAsync");
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("User - Calling OnInitialized");
+        // Initialization logic can go here if needed
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        Console.WriteLine("User - Calling OnInitializedAsync");
+        return base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("User - Calling OnParametersSet");
+        base.OnParametersSet();
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        Console.WriteLine("User - Calling OnParametersSetAsync");
+        return base.OnParametersSetAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"User - Calling OnAfterRender, firstRender: {firstRender}");
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine($"User - Calling OnAfterRenderAsync, firstRender: {firstRender} {Environment.NewLine} -------------- {Environment.NewLine}");
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

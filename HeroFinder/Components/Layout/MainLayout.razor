@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <!-- Full Width Header at Top -->
+    <header class="hero-header">
+        <a href="/" class="header-brand">
+            <span class="header-hero">HERO</span>
+            <span class="header-finder">FINDER</span>
+        </a>
+        <div class="header-badge">⚡ POWERED BY HEROES ⚡</div>
+    </header>
+
+    <!-- Main Layout with Sidebar and Content -->
+    <div class="main-layout">
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+
+        <main class="main-content">
+            <article class="content px-4">
+                <CascadingValue Value="_user">
+                    @Body
+                </CascadingValue>
+            </article>
+        </main>
+    </div>
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    private User? _user;
+
+    protected override void OnInitialized()
+    {
+        _user = new User { FirstName = "Brent", LastName = "Stewart" };
+    }
+}
