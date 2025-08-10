@@ -3,11 +3,10 @@
 @page "/herodetails/{id:int}"
 @page "/herodetails/{id:int}/{returnUrl?}"
 
-@inject HeroApiService HeroApiService
-@inject NavigationManager Navigation
+@inherits ViewModelComponentBase<HeroDetailsViewModel>
 
 <div class="hero-details-bg">
-    @if (hero == null)
+    @if (ViewModel.Hero == null)
     {
         <div class="loading-container">
             <div class="loading-card">
@@ -20,26 +19,26 @@
     {
         <div class="hero-details-container">
             <div class="back-button-container">
-                <button class="back-button @(hero.Universe == "Marvel" ? "marvel-back" : "dc-back")" @onclick="GoBack">
+                <button class="back-button @(ViewModel.Hero.Universe == "Marvel" ? "marvel-back" : "dc-back")" @onclick="ViewModel.GoBack">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     Back
                 </button>
             </div>
-            <div class="hero-details-card @(hero.Universe == "Marvel" ? "marvel-theme" : "dc-theme")">
+            <div class="hero-details-card @(ViewModel.Hero.Universe == "Marvel" ? "marvel-theme" : "dc-theme")">
                 <div class="hero-image-section">
                     <div class="hero-image-wrapper">
-                        <img src="@hero.ImageLink" alt="@hero.HeroName" class="hero-main-image" />
-                        <div class="universe-badge @(hero.Universe == "Marvel" ? "marvel-badge" : "dc-badge")">
-                            @hero.Universe
+                        <img src="@ViewModel.Hero.ImageLink" alt="@ViewModel.Hero.HeroName" class="hero-main-image" />
+                        <div class="universe-badge @(ViewModel.Hero.Universe == "Marvel" ? "marvel-badge" : "dc-badge")">
+                            @ViewModel.Hero.Universe
                         </div>
-                        <button class="details-favorite-button @(hero.IsFavorite ? "favorited" : "")" 
-                                @onclick="ToggleFavorite"
-                                title="@(hero.IsFavorite ? "Remove from favorites" : "Add to favorites")">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="@(hero.IsFavorite ? "#FDD835" : "none")" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
-                                      stroke="@(hero.IsFavorite ? "#FDD835" : "#FAFAFA")" 
+                        <button class="details-favorite-button @(ViewModel.Hero.IsFavorite ? "favorited" : "")"
+                                @onclick="ViewModel.ToggleFavorite"
+                                title="@(ViewModel.Hero.IsFavorite ? "Remove from favorites" : "Add to favorites")">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="@(ViewModel.Hero.IsFavorite ? "#FDD835" : "none")" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                                      stroke="@(ViewModel.Hero.IsFavorite ? "#FDD835" : "#FAFAFA")"
                                       stroke-width="2" 
                                       stroke-linejoin="round"/>
                             </svg>
@@ -47,22 +46,22 @@
                     </div>
                 </div>
                 <div class="hero-info-section">
-                    <h1 class="hero-title">@hero.HeroName</h1>
+                    <h1 class="hero-title">@ViewModel.Hero.HeroName</h1>
                     <div class="hero-details-grid">
                         <div class="detail-item">
                             <span class="detail-label">Secret Identity:</span>
-                            <span class="detail-value">@hero.SecretIdentity</span>
+                            <span class="detail-value">@ViewModel.Hero.SecretIdentity</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Universe:</span>
-                            <span class="detail-value">@hero.Universe</span>
+                            <span class="detail-value">@ViewModel.Hero.Universe</span>
                         </div>
                         <div class="detail-item abilities-item">
                             <span class="detail-label">Abilities:</span>
                             <div class="abilities-list">
-                                @foreach (var ability in hero.Abilities)
+                                @foreach (var ability in ViewModel.Hero.Abilities)
                                 {
-                                    <span class="ability-tag @(hero.Universe == "Marvel" ? "marvel-ability" : "dc-ability")">@ability</span>
+                                    <span class="ability-tag @(ViewModel.Hero.Universe == "Marvel" ? "marvel-ability" : "dc-ability")">@ability</span>
                                 }
                             </div>
                         </div>
@@ -76,43 +75,18 @@
 @code {
     [Parameter]
     public int id { get; set; }
-    
+
     [Parameter]
     public string? returnUrl { get; set; }
-    
-    private Hero? hero;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (id > 0)
+        if (firstRender)
         {
-            hero = await HeroApiService.GetHeroByIdAsync(id);
+            await ViewModel.LoadHeroAsync(id);
+            ViewModel.SetReturnUrl(returnUrl);
         }
-    }
 
-    private void GoBack()
-    {
-        if (!string.IsNullOrEmpty(returnUrl))
-        {
-            Navigation.NavigateTo(Uri.UnescapeDataString(returnUrl));
-        }
-        else
-        {
-            Navigation.NavigateTo("/heroindex"); // fallback
-        }
-    }
-
-    private async Task ToggleFavorite()
-    {
-        if (hero == null) return;
-
-        var newFavoriteStatus = !hero.IsFavorite;
-        var success = await HeroApiService.UpdateHeroFavoriteAsync(hero.Id, newFavoriteStatus);
-        
-        if (success)
-        {
-            hero.IsFavorite = newFavoriteStatus;
-            StateHasChanged();
-        }
+        await base.OnAfterRenderAsync(firstRender);
     }
 }

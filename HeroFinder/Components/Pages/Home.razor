@@ -26,7 +26,7 @@
             
             <div class="column center-column">
                 <div class="welcome-section">
-                    <h2 class="welcome-title">Welcome @CurrentUser?.FirstName, we hope you enjoy the Ultimate Hero Experience</h2>
+                    <h2 class="welcome-title">Welcome @User?.FirstName, we hope you enjoy the Ultimate Hero Experience</h2>
                     <p class="site-description">
                         Discover the ultimate collection of legendary superheroes from Marvel and DC Comics! 
                         Explore their incredible powers, secret identities, and epic stories. Build your 
@@ -75,8 +75,8 @@
 </div>
 
 @code {
-    [CascadingParameter]
-    public User? CurrentUser { get; set; }
+    [CascadingParameter(Name = "CurrentUser")]
+    public User? User { get; set; }
 
     private List<Hero>? featuredHeroes;
 

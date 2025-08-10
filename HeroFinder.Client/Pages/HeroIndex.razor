@@ -1,5 +1,5 @@
-﻿@rendermode InteractiveAuto
-@page "/heroindex"
+﻿@page "/heroindex"
+@rendermode InteractiveAuto
 @inject HeroApiService HeroApiService
 
 <div class="hero-index-bg">
@@ -19,7 +19,12 @@
     </div>
     @if (heroes == null)
     {
-        <p>Loading heroes...</p>
+        <div class="loading-container">
+            <div class="loading-card">
+                <h2 class="loading-text">Loading heroes...</h2>
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
     }
     else if (!FilteredHeroes.Any())
     {
@@ -53,10 +58,17 @@
         _ = searchInputRef.FocusAsync();
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        heroes = await HeroApiService.GetHeroesAsync();
-    }
+        if(firstRender)
+        {
+            await Task.Delay(500); // Simulate loading delay
+            heroes = await HeroApiService.GetHeroesAsync();
+            StateHasChanged();
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }  
 
     private async Task HandleFavoriteToggle(Hero hero)
     {

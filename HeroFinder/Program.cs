@@ -2,10 +2,12 @@ using AutoMapper;
 using HeroFinder.Client.Services; // For HeroMappingProfile
 using HeroFinder.Components;
 using HeroFinder.ComponentLibrary;
+using HeroFinder.ComponentLibrary.ViewModels; // Add this for AddViewModels
 using HeroFinder.Services;
 using HeroFinder.Repositories;
 using HeroFinder.Shared.Repositories;
 using HeroFinder.Shared.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,12 @@ builder.Services.AddControllers(); // Add this line
 builder.Services.AddSingleton<IHeroRepository, HeroRepository>();
 builder.Services.AddSingleton<IHeroService, HeroService>();
 builder.Services.AddScoped<HeroApiService>();
+
+// Register ViewModels for server-side rendering - include both server and client assemblies
+builder.Services.AddViewModels(
+    Assembly.GetExecutingAssembly(),
+    typeof(HeroFinder.Client._Imports).Assembly
+);
 
 // Register HttpClient for server-side Blazor (required for InteractiveAuto)
 var baseAddress = builder.Configuration["BaseAddress"] ?? "https://localhost:7043";

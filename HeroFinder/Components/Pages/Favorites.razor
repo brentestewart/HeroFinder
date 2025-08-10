@@ -1,5 +1,6 @@
 ﻿@page "/favorites"
-@rendermode InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(false))
+@attribute [StreamRendering]
 @inject HeroApiService HeroApiService
 
 <div class="favorites-bg">
@@ -56,6 +57,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(500);
         await LoadFavoriteHeroes();
     }
 
