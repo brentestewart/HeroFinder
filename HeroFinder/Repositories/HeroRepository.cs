@@ -44,7 +44,7 @@ namespace HeroFinder.Repositories
             return GetHeroes().Where(h => h.IsFavorite);
         }
 
-        public async Task<bool> UpdateHeroFavoriteAsync(int id, bool isFavorite)
+        public Task<bool> UpdateHeroFavoriteAsync(int id, bool isFavorite)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace HeroFinder.Repositories
                     
                     var hero = _heroes.FirstOrDefault(h => h.Id == id);
                     if (hero == null)
-                        return false;
+                        return Task.FromResult(false);
 
                     hero.IsFavorite = isFavorite;
 
@@ -69,11 +69,11 @@ namespace HeroFinder.Repositories
                     File.WriteAllText(_jsonPath, updatedJson);
                 }
 
-                return true;
+                return Task.FromResult(true);
             }
             catch
             {
-                return false;
+                return Task.FromResult(false);
             }
         }
     }

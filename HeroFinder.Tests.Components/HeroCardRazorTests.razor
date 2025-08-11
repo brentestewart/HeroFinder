@@ -1,0 +1,37 @@
+@using HeroFinder.ComponentLibrary
+@using HeroFinder.Shared.Models
+@inherits BunitTestContext
+
+These tests are written entirely in razor and C# syntax.
+
+Learn more at https://bunit.dev/docs/getting-started/writing-tests.html#creating-basic-tests-in-razor-files
+
+@code {
+	private string unfavoritedStrokeColor = "[stroke='#FAFAFA']";
+
+	[Test]
+	public void HeroCardStartsWithNoFavoriteRazor()
+	{
+		// Arrange
+		var myHero = new Hero { IsFavorite = false };
+		var cut = Render(@<HeroCard Hero="myHero" />);
+
+		// Assert that content of the paragraph shows counter at zero
+		cut.Find(unfavoritedStrokeColor);
+	}
+
+    [Test]
+	public void ClickingFavoriteCallsFavoriteCallbackRazor()
+	{
+		// Arrange
+		var wasCalled = false;
+		var myHero = new Hero { IsFavorite = false };
+		var cut = Render(@<HeroCard Hero="myHero" OnFavoriteToggle="() => wasCalled = true" />);
+
+		// Act - click button to increment counter
+		cut.Find("button").Click();
+
+		// Assert that the callback was called
+		Assert.True(wasCalled);
+	}
+}
