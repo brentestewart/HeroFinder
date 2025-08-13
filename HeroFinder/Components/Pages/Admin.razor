@@ -1,7 +1,9 @@
 ﻿@page "/admin"
+@layout AdminLayout
 @rendermode InteractiveServer
 @using HeroFinder.Shared.Models
 @using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
 
 <div class="admin-bg">
     <div class="admin-container">
@@ -97,6 +99,13 @@
                         </svg>
                         <span>Reset</span>
                     </button>
+
+                    <button type="button" @onclick="GoBack" class="back-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Back</span>
+                    </button>
                 </div>
 
                 <ValidationSummary class="validation-summary" />
@@ -122,6 +131,7 @@
     private bool isSubmitting = false;
     private bool showSuccessMessage = false;
     private string lastAddedHeroName = string.Empty;
+    private bool allowNavigation = false; // Flag to control navigation prevention
 
     protected override void OnInitialized()
     {
@@ -144,21 +154,21 @@
     private async Task HandleValidSubmit()
     {
         isSubmitting = true;
-        
+
         try
         {
             // Filter out empty abilities
             newHero.Abilities = abilityInputs.Where(a => !string.IsNullOrWhiteSpace(a)).ToList();
-            
+
             // Simulate processing time (replace with actual API call later)
             await Task.Delay(1500);
-            
+
             lastAddedHeroName = newHero.HeroName;
             showSuccessMessage = true;
-            
+
             // Reset form after successful submission
             ResetForm();
-            
+
             // Hide success message after 5 seconds
             _ = Task.Run(async () =>
             {
@@ -178,6 +188,38 @@
         newHero = new HeroFormModel();
         abilityInputs = new List<string> { "", "", "" };
         showSuccessMessage = false;
+    }
+
+    private void GoBack()
+    {
+        allowNavigation = true; // Allow navigation for intentional back button click
+        Navigation.NavigateTo("/");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Navigation.RegisterLocationChangingHandler(args =>
+        {
+            if (!allowNavigation)
+            {
+                args.PreventNavigation();
+            }
+            return ValueTask.CompletedTask;
+        });
+
+        base.OnAfterRender(firstRender);
+    }
+
+    private ValueTask LocationChanging(LocationChangingContext context)
+    {
+        if (!allowNavigation)
+        {
+            context.PreventNavigation();
+            // Reset form when navigating away
+            ResetForm();
+        }
+
+        return ValueTask.CompletedTask;
     }
 
     // Form model with validation attributes

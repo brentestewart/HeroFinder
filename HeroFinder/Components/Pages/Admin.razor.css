@@ -292,6 +292,30 @@
     }
 }
 
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    justify-content: center;
+    background: rgba(158, 158, 158, 0.1);
+    color: #FAFAFA;
+    border: 2px solid rgba(158, 158, 158, 0.5);
+}
+
+    .back-btn:hover {
+        background: rgba(158, 158, 158, 0.2);
+        border-color: #9E9E9E;
+        transform: translateY(-2px);
+    }
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .admin-bg {

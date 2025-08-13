@@ -1,6 +1,5 @@
 ﻿@rendermode InteractiveAuto
 
-@page "/herodetails/{id:int}"
 @page "/herodetails/{id:int}/{returnUrl?}"
 
 @inherits ViewModelComponentBase<HeroDetailsViewModel>
@@ -79,12 +78,20 @@
     [Parameter]
     public string? returnUrl { get; set; }
 
+    [SupplyParameterFromQuery]
+    public string? campaign { get; set; }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await ViewModel.LoadHeroAsync(id);
             ViewModel.SetReturnUrl(returnUrl);
+
+            if (!string.IsNullOrWhiteSpace(campaign))
+            {
+                ViewModel.RegisterAdCampaign(campaign);
+            }
         }
 
         await base.OnAfterRenderAsync(firstRender);

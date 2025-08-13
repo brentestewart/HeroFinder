@@ -1,5 +1,8 @@
 ﻿@page "/favorites"
+
 @rendermode @(new InteractiveServerRenderMode(false))
+@* @rendermode InteractiveServerNoPreRender *@
+@* @rendermode InteractiveServer *@
 @attribute [StreamRendering]
 @inject HeroApiService HeroApiService
 

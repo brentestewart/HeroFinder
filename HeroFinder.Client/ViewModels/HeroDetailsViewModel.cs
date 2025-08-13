@@ -56,6 +56,11 @@ public class HeroDetailsViewModel(HeroApiService heroApiService, NavigationManag
         }
     }
 
+    public void RegisterAdCampaign(string adCampaign)
+    {
+        // Notify that this hit came from adCampaign
+    }
+
     public override void OnNavigatedAway()
     {
         Hero = null; // Clear hero data when navigating away
