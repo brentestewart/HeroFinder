@@ -21,7 +21,7 @@ public class HeroDetailsViewModel(HeroApiService heroApiService, NavigationManag
         }
 
         Hero = await HeroApiService.GetHeroByIdAsync(id);
-        await Task.Delay(1000);
+        await Task.Delay(500);
         StateHasChanged();
     }
 
@@ -52,7 +52,6 @@ public class HeroDetailsViewModel(HeroApiService heroApiService, NavigationManag
         if (success)
         {
             Hero.IsFavorite = newFavoriteStatus;
-            StateHasChanged();
         }
     }
 

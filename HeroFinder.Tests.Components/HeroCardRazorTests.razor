@@ -25,7 +25,7 @@ Learn more at https://bunit.dev/docs/getting-started/writing-tests.html#creating
 	{
 		// Arrange
 		var wasCalled = false;
-		var myHero = new Hero { IsFavorite = false };
+		var myHero = new Hero();
 		var cut = Render(@<HeroCard Hero="myHero" OnFavoriteToggle="() => wasCalled = true" />);
 
 		// Act - click button to increment counter

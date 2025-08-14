@@ -15,10 +15,10 @@ public class HeroCardCSharpTests : BunitTestContext
 	public void HeroCardStartsWithNoFavoriteCode()
 	{
         // Arrange
-        var myHero = new Hero { Abilities = ["Test Abilities"], HeroName = "Test Hero", Id = 1, ImageLink = "test.jpg", IsFavorite = false, Universe = "Marvel" };
+        var myHero = new Hero { IsFavorite = false };
         var cut = RenderComponent<HeroCard>(parameters => parameters.Add(p => p.Hero, myHero));
 
-		// Assert that content of the paragraph shows counter at zero
+		// Assert that unfavorited stroke color is present
 		//cut.Find("svg").MarkupMatches(matchingMarkup);
         cut.Find(unfavoritedStrokeColor);
 	}
@@ -28,8 +28,10 @@ public class HeroCardCSharpTests : BunitTestContext
 	{
         // Arrange
         var wasCalled = false;
-        var myHero = new Hero { Abilities = ["Test Abilities"], HeroName = "Test Hero", Id = 1, ImageLink = "test.jpg", IsFavorite = false, Universe = "Marvel" };
-        var cut = RenderComponent<HeroCard>(parameters => parameters.Add(p => p.Hero, myHero).Add(p => p.OnFavoriteToggle, () => wasCalled = true));
+        var myHero = new Hero();
+        var cut = RenderComponent<HeroCard>(parameters => parameters
+            .Add(p => p.Hero, myHero)
+            .Add(p => p.OnFavoriteToggle, () => wasCalled = true));
 
         // Act - click button to increment counter
         cut.Find("button").Click();

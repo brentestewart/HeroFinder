@@ -35,7 +35,7 @@
         <div class="hero-list">
             @foreach (var hero in FilteredHeroes)
             {
-                <HeroCard Hero="hero" OnFavoriteToggle="HandleFavoriteToggle" />
+                <HeroCard Hero="hero" @key="hero.Id" OnFavoriteToggle="HandleFavoriteToggle" />
             }
         </div>
     }
@@ -78,7 +78,6 @@
         if (success)
         {
             hero.IsFavorite = newFavoriteStatus;
-            StateHasChanged();
         }
     }
 }
